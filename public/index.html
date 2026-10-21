@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Rocking Boat · Modellsteuerung</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/hmi.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-boat" viewBox="0 0 24 24"><path d="M3 14h18l-2.6 4.2a2 2 0 0 1-1.7.8H7.3a2 2 0 0 1-1.7-.8L3 14Zm4-7h6l4 5H5l2-5Zm2-3h2v2H9V4Z"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></symbol>
+      <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+      <symbol id="i-cycle" viewBox="0 0 24 24"><path d="M12 4a8 8 0 0 1 7.75 6H17.6A6 6 0 1 0 18 13h2a8 8 0 1 1-8-9Zm5 3 4-1-1 4-3-3Z"/><rect x="10" y="9" width="4" height="6" rx="1"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m9.5 16.2-4.2-4.2-1.4 1.4 5.6 5.6L20.1 8.4 18.7 7l-9.2 9.2Z"/></symbol>
+      <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3 1.5 21h21L12 3Zm1 15h-2v-2h2v2Zm0-4h-2V9h2v5Z"/></symbol>
+      <symbol id="i-auto" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm3.5 15-1.1-3H9.6l-1.1 3H6.4l4.3-11h2.6l4.3 11h-2.1Zm-5.2-5h3.4L12 7.6 10.3 12Z"/></symbol>
+      <symbol id="i-hand" viewBox="0 0 24 24"><path d="M10 3a1.5 1.5 0 0 1 3 0v7h1V5a1.5 1.5 0 0 1 3 0v6h1V8a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7h-1.3a7 7 0 0 1-5.6-2.8L3.5 14.4a1.5 1.5 0 0 1 2.3-1.9L8 15V6a1.5 1.5 0 0 1 2 0V3Z"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3zM4.2 2.8l2.1 2.1-1.4 1.4-2.1-2.1zM17.7 16.3l2.1 2.1-1.4 1.4-2.1-2.1zM2.8 19.8l2.1-2.1 1.4 1.4-2.1 2.1zM16.3 6.3l2.1-2.1 1.4 1.4-2.1 2.1z"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M14.5 2.5A9.5 9.5 0 1 0 21.5 16 8 8 0 0 1 14.5 2.5Z"/></symbol>
+      <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4V4Zm10 0h6v6h-2V6h-4V4ZM4 14h2v4h4v2H4v-6Zm14 0h2v6h-6v-2h4v-4Z"/></symbol>
+      <symbol id="i-forward" viewBox="0 0 24 24"><path d="M4 6.5v11L12 12 4 6.5Zm8 0v11L20 12l-8-5.5Z"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3h1.5a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 20.5v-9A1.5 1.5 0 0 1 5.5 10H7Zm2 0h6V7a3 3 0 0 0-6 0v3Z"/></symbol>
+      <symbol id="i-unlock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 9.6-2l-1.8.9A3 3 0 0 0 9 7v3h9.5a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 20.5v-9A1.5 1.5 0 0 1 5.5 10H7Z"/></symbol>
+      <symbol id="i-rescan" viewBox="0 0 24 24"><path d="M12 5V2L8 6l4 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7Z"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" aria-hidden="true"><use href="#i-boat"/></svg>
+      <div class="brand-text">
+        <span class="brand-name" id="rideName">Rocking Boat</span>
+        <span class="brand-sub" id="rideSub">Modellsteuerung</span>
+      </div>
+    </div>
+
+    <div class="state" id="state" data-code="stopped" role="status" aria-live="polite">
+      <span class="state-dot" aria-hidden="true"></span>
+      <span class="state-text">
+        <span class="state-label" id="stateLabel">VERBINDE …</span>
+        <span class="state-hint" id="stateHint">Warte auf Steuerung</span>
+      </span>
+    </div>
+
+    <div class="topbar-meta">
+      <div class="meta-item">
+        <span class="meta-k">Betriebsart</span>
+        <span class="meta-v" id="modeLabel">–</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-k">E/A</span>
+        <span class="meta-v"><span class="led" id="ioLed"></span><span id="ioLabel">–</span></span>
+      </div>
+      <div class="meta-item meta-clock">
+        <span class="meta-k">Uhrzeit</span>
+        <span class="meta-v mono" id="clock">--:--:--</span>
+      </div>
+      <button class="icon-btn" id="themeBtn" type="button" title="Hell/Dunkel umschalten" aria-label="Hell/Dunkel umschalten">
+        <svg class="icon"><use href="#i-sun"/></svg>
+      </button>
+      <button class="icon-btn" id="fullBtn" type="button" title="Vollbild" aria-label="Vollbild">
+        <svg class="icon"><use href="#i-full"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <button class="alarm-line" id="alarmLine" type="button" hidden>
+    <svg class="icon" aria-hidden="true"><use href="#i-warn"/></svg>
+    <span class="alarm-line-time mono" id="alarmLineTime"></span>
+    <span class="alarm-line-text" id="alarmLineText"></span>
+    <span class="alarm-line-more" id="alarmLineMore"></span>
+  </button>
+
+  <main class="layout">
+    <section class="panel synoptic-panel" aria-labelledby="synTitle">
+      <header class="panel-head">
+        <h2 id="synTitle">Streckenübersicht</h2>
+        <ul class="legend" aria-label="Legende">
+          <li><i class="lg lg-free"></i>frei</li>
+          <li><i class="lg lg-occ"></i>belegt</li>
+          <li><i class="lg lg-res"></i>reserviert</li>
+          <li><i class="lg lg-move"></i>Fahrt</li>
+          <li><i class="lg lg-fault"></i>Störung</li>
+        </ul>
+      </header>
+      <div class="synoptic-wrap">
+        <svg id="synoptic" class="synoptic" role="img" aria-label="Streckenübersicht mit Blöcken und Booten"></svg>
+      </div>
+    </section>
+
+    <section class="elements" id="elements" aria-label="Bewegliche Elemente"></section>
+
+    <section class="panel bottom" id="bottom" aria-label="Meldungen und Diagnose"></section>
+
+    <aside class="side">
+      <section class="panel controls" aria-labelledby="ctrlTitle">
+        <header class="panel-head"><h2 id="ctrlTitle">Bedienpult</h2></header>
+        <div class="controls-body">
+          <div class="segmented" role="group" aria-label="Betriebsart">
+            <button class="seg" type="button" data-cmd="mode" data-params='{"mode":"auto"}' data-can="modeAuto" data-mode="auto">
+              <svg class="icon"><use href="#i-auto"/></svg>Automatik
+            </button>
+            <button class="seg" type="button" data-cmd="mode" data-params='{"mode":"manual"}' data-can="modeManual" data-mode="manual">
+              <svg class="icon"><use href="#i-hand"/></svg>Hand
+            </button>
+          </div>
+
+          <div class="ctrl-grid">
+            <button class="btn btn-lamp btn-start" id="btnStart" type="button" data-cmd="start" data-can="start">
+              <svg class="icon"><use href="#i-play"/></svg>Start
+            </button>
+            <button class="btn btn-lamp btn-halt" id="btnStop" type="button" data-cmd="stop" data-can="stop">
+              <svg class="icon"><use href="#i-stop"/></svg>Halt
+            </button>
+            <button class="btn btn-lamp btn-cycle" id="btnCycle" type="button" data-cmd="endCycle" data-can="endCycle">
+              <svg class="icon"><use href="#i-cycle"/></svg>Zyklusende
+            </button>
+            <button class="btn btn-lamp btn-reset" id="btnReset" type="button" data-cmd="reset" data-can="reset">
+              <svg class="icon"><use href="#i-check"/></svg>Quittieren
+            </button>
+          </div>
+
+          <div class="estop-row">
+            <button class="estop" id="btnEstop" type="button" aria-label="Not-Halt auslösen">
+              <span class="estop-cap">NOT-HALT</span>
+            </button>
+            <p class="estop-note">Software-Not-Halt. Ersetzt <strong>nicht</strong> den fest verdrahteten Not-Halt-Taster am Modell.</p>
+          </div>
+        </div>
+      </section>
+      <div id="stations" class="stations"></div>
+    </aside>
+  </main>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <dialog class="dialog" id="confirmDialog">
+    <form method="dialog">
+      <h3 id="confirmTitle">Bestätigen</h3>
+      <p id="confirmText"></p>
+      <div class="dialog-actions">
+        <button class="btn" value="cancel" type="submit">Abbrechen</button>
+        <button class="btn btn-primary" value="ok" type="submit" id="confirmOk">Ausführen</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="offline" id="offline" hidden>
+    <div class="offline-box">
+      <div class="offline-spinner" aria-hidden="true"></div>
+      <strong>Verbindung zur Steuerung unterbrochen</strong>
+      <span>Bedienung gesperrt – es wird automatisch neu verbunden …</span>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
