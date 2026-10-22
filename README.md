@@ -25,6 +25,18 @@ lassen sich so sofort ausprobieren. Für den Betrieb am Messestand empfiehlt sic
 | `IO_HOST`, `IO_PORT` | `127.0.0.1`, `7000` | Adresse der Modell-Hardware |
 | `RIDE_CONFIG` | `config/rocking-boat.json` | Streckenlayout |
 
+### Als einzelne HTML-Datei
+
+```bash
+npm run build:standalone      # erzeugt dist/rocking-boat-steuerung.html
+```
+
+Die Datei enthält Oberfläche, Steuerung, Simulation und Streckenlayout. Sie läuft ohne Server und ohne
+Internetverbindung per Doppelklick im Browser (getestet mit Chromium). Damit lässt sie sich vorführen, weitergeben
+oder auf einem Tablet nutzen. Die Einzeldatei arbeitet immer mit der Simulation, nach dem Neuladen beginnt diese von
+vorn. Für die echte Modell-Hardware wird der Server (`npm start`) gebraucht. Ein anderes Layout einbauen:
+`node tools/build-standalone.js mein-layout.json ziel.html`.
+
 ## Aufbau der Oberfläche
 
 - **Statusanzeige** (oben): Anlagenzustand in Klartext (*Bereit, Fahrbetrieb, Halt eingeleitet, Zyklusende,
@@ -175,8 +187,10 @@ src/controller/controller.js  Ablaufsteuerung: Blocklogik, Betriebsarten, Überw
 src/controller/alarms.js      Meldeliste mit Quittierung
 src/io/simulation.js          Anlagensimulation (gleiche Signale wie die Hardware)
 src/io/tcp-json.js            TCP/JSON-Treiber für die Modell-Hardware
-src/server.js                 HTTP-Server, Server-Sent Events, Steuerungszyklus (50 ms)
+src/runtime.js                Steuerungszyklus (50 ms), Zustandsabbild, Befehle – für Server und Einzeldatei
+src/server.js                 HTTP-Server, Server-Sent Events
+src/standalone.js             Laufzeit im Browser für die Einzeldatei-Version
 public/                       Bedienoberfläche (HTML/CSS/JavaScript ohne Build-Schritt)
-tools/                        Hardware-Emulator, Signalliste
+tools/                        Hardware-Emulator, Signalliste, Bau der Einzeldatei
 test/                         Tests (node:test)
 ```

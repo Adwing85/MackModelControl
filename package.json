@@ -11,6 +11,7 @@
     "start": "node src/server.js",
     "emulator": "node tools/hardware-emulator.js",
     "io-list": "node tools/io-list.js",
+    "build:standalone": "node tools/build-standalone.js",
     "test": "node --test test/*.test.js"
   }
 }

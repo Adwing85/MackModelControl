@@ -2,9 +2,9 @@ import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ioList, loadConfig, TYPE_LABELS } from './config.js';
-import { RideController } from './controller/controller.js';
+import { loadConfig } from './config.js';
 import { createIo } from './io/index.js';
+import { createRuntime } from './runtime.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC_DIR = path.join(ROOT, 'public');
@@ -30,58 +30,16 @@ const MIME = {
  * Steuerungszyklus und Simulation laufen im selben Prozess (Standard 50 ms).
  */
 export function createRideServer({ config, io, publicDir = PUBLIC_DIR }) {
-  const controller = new RideController(config);
+  const runtime = createRuntime({ config, io });
+  const { controller, snapshot, handleCommand } = runtime;
   const clients = new Set();
   let loopTimer = null;
   let broadcastTimer = null;
-  let lastTick = Date.now();
-
-  function tick() {
-    const now = Date.now();
-    io.update?.((now - lastTick) / 1000);
-    lastTick = now;
-    io.write(controller.step(io.read(), now));
-  }
-
-  function snapshot() {
-    return {
-      ...controller.snapshot(),
-      io: { ...io.info(), inputs: controller.inputs, outputs: controller.outputs },
-      sim: io.kind === 'simulation' ? io.snapshot() : null,
-    };
-  }
 
   function broadcast() {
     if (!clients.size) return;
     const data = `data: ${JSON.stringify(snapshot())}\n\n`;
     for (const res of clients) res.write(data);
-  }
-
-  function handleCommand(cmd) {
-    if (!cmd || typeof cmd.type !== 'string') return { ok: false, message: 'Befehl ohne „type“' };
-    if (cmd.type.startsWith('sim.')) return handleSimCommand(cmd);
-    return controller.command(cmd);
-  }
-
-  function handleSimCommand({ type, ...p }) {
-    if (io.kind !== 'simulation') return { ok: false, message: 'Nur im Simulationsbetrieb verfügbar' };
-    switch (type) {
-      case 'sim.speed':
-        return io.setSpeed(p.factor);
-      case 'sim.estop':
-        return io.setEstop(p.pressed);
-      case 'sim.fault':
-        return io.setFault(p.kind, p.section, p.active);
-      case 'sim.clearFaults':
-        io.clearFaults();
-        return { ok: true };
-      case 'sim.reset':
-        io.reset();
-        controller.reinitialize();
-        return { ok: true, message: 'Simulation zurückgesetzt' };
-      default:
-        return { ok: false, message: `Unbekannter Simulationsbefehl „${type}“` };
-    }
   }
 
   function openStream(req, res) {
@@ -120,7 +78,7 @@ export function createRideServer({ config, io, publicDir = PUBLIC_DIR }) {
     try {
       if (url.pathname === '/api/stream' && req.method === 'GET') return openStream(req, res);
       if (url.pathname === '/api/state' && req.method === 'GET') return sendJson(res, 200, snapshot());
-      if (url.pathname === '/api/config' && req.method === 'GET') return sendJson(res, 200, { config, io: ioList(config), typeLabels: TYPE_LABELS, driver: io.kind });
+      if (url.pathname === '/api/config' && req.method === 'GET') return sendJson(res, 200, runtime.configInfo());
       if (url.pathname === '/api/command') {
         if (req.method !== 'POST') return sendJson(res, 405, { ok: false, message: 'Nur POST erlaubt' });
         // Nur JSON-Anfragen: verhindert Befehle über einfache Formulare fremder Webseiten.
@@ -157,8 +115,8 @@ export function createRideServer({ config, io, publicDir = PUBLIC_DIR }) {
     handleCommand,
     async listen(port = 8080, host = '127.0.0.1') {
       io.start?.();
-      lastTick = Date.now();
-      loopTimer = setInterval(tick, config.timing.tickMs);
+      runtime.resetClock();
+      loopTimer = setInterval(runtime.tick, config.timing.tickMs);
       broadcastTimer = setInterval(broadcast, config.timing.broadcastMs);
       await new Promise((resolve, reject) => {
         server.once('error', reject);

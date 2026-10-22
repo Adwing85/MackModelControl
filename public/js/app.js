@@ -6,6 +6,8 @@ import { $, $$, confirmAction, fmtClock, setAttr, setData, setText, toast } from
 
 const MOVABLE = new Set(['turntable', 'rotatingLift', 'catchCarLift']);
 const THEME_KEY = 'mmc-theme';
+// Einzeldatei-Version: Steuerung und Simulation laufen im Browser statt auf dem Server.
+const local = window.MMC_LOCAL_BACKEND ?? null;
 
 const app = {
   snap: null,
@@ -24,12 +26,7 @@ const app = {
 
 async function send(type, params = {}, { quiet = false } = {}) {
   try {
-    const res = await fetch('/api/command', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, ...params }),
-    });
-    const data = await res.json();
+    const data = local ? local.command({ type, ...params }) : await postCommand({ type, ...params });
     if (!quiet) {
       if (!data.ok) toast(data.message ?? 'Befehl abgelehnt', 'error');
       else if (data.message) toast(data.message, 'ok');
@@ -39,6 +36,15 @@ async function send(type, params = {}, { quiet = false } = {}) {
     if (!quiet) toast('Keine Verbindung zur Steuerung', 'error');
     return { ok: false };
   }
+}
+
+async function postCommand(cmd) {
+  const res = await fetch('/api/command', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(cmd),
+  });
+  return res.json();
 }
 
 function wireCommands() {
@@ -195,16 +201,25 @@ function select(id) {
 // ------------------------------------------------------------------ Verbindung
 
 function connect() {
-  const source = new EventSource('/api/stream');
-  source.onmessage = (e) => {
-    try {
-      app.snap = JSON.parse(e.data);
-    } catch {
-      return;
-    }
+  const onSnapshot = (snap) => {
+    app.snap = snap;
     app.lastMsg = Date.now();
     setOnline(true);
     scheduleRender();
+  };
+  if (local) {
+    local.subscribe(onSnapshot);
+    return;
+  }
+  const source = new EventSource('/api/stream');
+  source.onmessage = (e) => {
+    let snap;
+    try {
+      snap = JSON.parse(e.data);
+    } catch {
+      return;
+    }
+    onSnapshot(snap);
   };
   // EventSource verbindet sich nach Abbruch selbstständig neu.
 }
@@ -259,6 +274,7 @@ function wireChrome() {
 // ------------------------------------------------------------------ Start
 
 async function loadConfig() {
+  if (local) return local.configInfo();
   for (;;) {
     try {
       const res = await fetch('/api/config');

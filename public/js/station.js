@@ -106,13 +106,16 @@ export function buildStationPanel(cfg, send) {
       const r = st.restraints;
       const rText = r.locked ? 'verriegelt' : 'offen';
       const rPending = r.open === r.locked;
-      renderIfChanged(restraintsV, `${rText}|${rPending}`, () => [icon(r.locked ? 'lock' : 'unlock'), rPending ? `${rText} …` : rText]);
+      // Während des Schaltens pulsiert die Kachel; der Text bleibt gleich breit.
+      renderIfChanged(restraintsV, rText, () => [icon(r.locked ? 'lock' : 'unlock'), rText]);
+      setData(restraintsTile, 'pending', rPending || null);
       setData(restraintsTile, 'tone', st.boat && !r.locked ? 'warn' : r.locked && st.boat ? 'ok' : null);
 
       const g = st.gates;
       const gText = g.closed ? 'geschlossen' : 'offen';
       const gPending = g.open === g.closed;
-      setText(gatesV, gPending ? `${gText} …` : gText);
+      setText(gatesV, gText);
+      setData(gatesTile, 'pending', gPending || null);
       setData(gatesTile, 'tone', g.closed ? null : 'warn');
 
       dwell = snap.settings.dwellTime;
