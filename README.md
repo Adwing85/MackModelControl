@@ -135,9 +135,10 @@ aufgezählt, nach dem letzten folgt wieder der erste.
 | `timing.*` | Überwachungszeiten (Sensorentprellung, Zeitreserven, Totmann-Zeit) |
 | `simulation.initialBoats` | Startpositionen der Boote in der Simulation |
 
-> **Annahme:** Reihenfolge, Fahrzeiten, Drehwinkel und Hubwege des Standardlayouts sind Platzhalter
-> (Bahnhof → Drehplattform 180° → Wasserkanal → Catch-Car-Lift → Abfahrt → Drehlift 300 mm/180° → Bremsstrecke).
-> Sie müssen an das reale Modell angepasst werden. Die Oberfläche baut sich vollständig aus der Konfiguration auf.
+> **Stand des Standardlayouts:** S-Kurve, Bogen an der Beckenwand, Kreisbogen und Drehplattform stammen aus dem
+> Testvideo, siehe [Streckenrekonstruktion](docs/strecke-aus-video.md). Bahnhof, Catch-Car-Lift, Drehlift, Drehwinkel
+> und Hubwege sind noch Annahmen (Bahnhof → Drehplattform 180° → S-Kurve → Beckenrand → Kreisbogen → Catch-Car-Lift →
+> Drehlift 300 mm/180° → Bremsstrecke). Die Oberfläche baut sich vollständig aus der Konfiguration auf.
 
 ## Anbindung der Modell-Hardware
 

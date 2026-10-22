@@ -498,8 +498,8 @@ body.mode-manual .manual-tools { display: flex; }
 .phases li.current { color: var(--text); font-weight: 750; }
 .phases li.current::before { background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 50%, transparent); }
 
-.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.tile { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line); }
+.tiles { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
+.tile { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 10px; border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--line); }
 .tile-k { font-size: 10.5px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
 .tile-v { display: flex; align-items: center; gap: 6px; font-weight: 750; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .tile[data-tone="warn"] { border-color: color-mix(in srgb, var(--warn) 55%, transparent); }

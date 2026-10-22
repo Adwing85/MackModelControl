@@ -14,16 +14,16 @@ const safeOutputs = (outputs) =>
 describe('Konfiguration', () => {
   test('Standardlayout ist gültig', () => {
     const config = normalizeConfig(rawConfig());
-    assert.equal(config.sections.length, 7);
+    assert.equal(config.sections.length, 8);
     assert.deepEqual(
       config.sections.map((s) => s.type),
-      ['station', 'turntable', 'block', 'catchCarLift', 'block', 'rotatingLift', 'block'],
+      ['station', 'turntable', 'block', 'block', 'block', 'catchCarLift', 'rotatingLift', 'block'],
     );
   });
 
   test('zu viele Boote werden abgelehnt', () => {
     const raw = rawConfig();
-    raw.boats = 7;
+    raw.boats = raw.sections.length;
     raw.simulation.initialBoats = raw.sections.map((s) => s.id);
     assert.throws(() => normalizeConfig(raw), (err) => err instanceof ConfigError && /Zu viele Boote/.test(err.message));
   });
@@ -44,8 +44,9 @@ describe('Automatikbetrieb', () => {
     rig.run(15 * 60, rig.assertNoDoubleOccupancy);
     assert.deepEqual(rig.alarmCodes(), []);
     assert.deepEqual(rig.sim.violations, []);
-    assert.ok(rig.ctrl.stats.dispatches >= 30, `nur ${rig.ctrl.stats.dispatches} Abfahrten`);
-    for (const b of rig.ctrl.boats.values()) assert.ok(b.rides >= 10, `${b.name} hat nur ${b.rides} Fahrten`);
+    // Mindestwerte mit Reserve unter dem Durchsatz des Standardlayouts (ca. 32 Abfahrten in 15 min)
+    assert.ok(rig.ctrl.stats.dispatches >= 25, `nur ${rig.ctrl.stats.dispatches} Abfahrten`);
+    for (const b of rig.ctrl.boats.values()) assert.ok(b.rides >= 8, `${b.name} hat nur ${b.rides} Fahrten`);
   });
 
   test('Abfahrt ohne Auto-Abfertigung nur mit geschlossenen Bügeln', () => {
@@ -184,8 +185,8 @@ describe('Handbetrieb', () => {
     const rig = createRig();
     assert.equal(rig.cmd('mode', { mode: 'manual' }).ok, true);
 
-    // Block 3 → Bahnhof: Bahnhof ist belegt
-    const blocked = rig.cmd('manual.advance', { section: 'block3' });
+    // Block 4 → Bahnhof: Bahnhof ist belegt
+    const blocked = rig.cmd('manual.advance', { section: 'block4' });
     assert.equal(blocked.ok, false);
     assert.match(blocked.message, /belegt/);
 
@@ -242,7 +243,7 @@ describe('Handbetrieb', () => {
   test('Fahrzeugverfolgung: Boot austragen und nach Neueinlesen wiederfinden', () => {
     const rig = createRig();
     rig.cmd('mode', { mode: 'manual' });
-    assert.equal(rig.cmd('tracking.remove', { section: 'block2' }).ok, false, 'Sensor meldet Boot – Austragen muss scheitern');
+    assert.equal(rig.cmd('tracking.remove', { section: 'block3' }).message, 'Sensor meldet ein Boot – Austragen nicht möglich');
     assert.equal(rig.cmd('tracking.rescan').ok, true);
     rig.tick();
     assert.equal(rig.ctrl.sections.filter((s) => s.boat).length, 3);

@@ -91,18 +91,19 @@ Erzeugt mit `npm run io-list`. Nach Änderungen am Layout neu erzeugen.
 | `drehplattform.drehung.pos` | number | Drehplattform: Drehung Istwert [°] |
 | `drehplattform.drehung.at` | string\|null | Drehplattform: Drehung erreichte Position (einfahrt \| ausfahrt) |
 | `drehplattform.lock.engaged` | bool | Drehplattform: Verriegelung eingerastet |
-| `block1.present` | bool | Block 1 · Wasserkanal: Boot in Halteposition |
+| `block1.present` | bool | Block 1 · S-Kurve: Boot in Halteposition |
+| `block2.present` | bool | Block 2 · Beckenrand: Boot in Halteposition |
+| `block3.present` | bool | Block 3 · Kreisbogen: Boot in Halteposition |
 | `catchcar.present` | bool | Catch-Car-Lift: Boot in Halteposition |
 | `catchcar.wagen.pos` | number | Catch-Car-Lift: Catch Car Istwert [%] |
 | `catchcar.wagen.at` | string\|null | Catch-Car-Lift: Catch Car erreichte Position (unten \| oben) |
-| `block2.present` | bool | Block 2 · Abfahrt: Boot in Halteposition |
 | `drehlift.present` | bool | Drehlift: Boot in Halteposition |
 | `drehlift.hub.pos` | number | Drehlift: Hub Istwert [mm] |
 | `drehlift.hub.at` | string\|null | Drehlift: Hub erreichte Position (unten \| oben) |
 | `drehlift.drehung.pos` | number | Drehlift: Drehung Istwert [°] |
 | `drehlift.drehung.at` | string\|null | Drehlift: Drehung erreichte Position (einfahrt \| ausfahrt) |
 | `drehlift.lock.engaged` | bool | Drehlift: Verriegelung eingerastet |
-| `block3.present` | bool | Block 3 · Bremsstrecke: Boot in Halteposition |
+| `block4.present` | bool | Block 4 · Bremsstrecke: Boot in Halteposition |
 
 ### Ausgänge (Steuerung → Hardware)
 
@@ -117,14 +118,16 @@ Erzeugt mit `npm run io-list`. Nach Änderungen am Layout neu erzeugen.
 | `drehplattform.drehung.cmd` | string\|null | Drehplattform: Drehung Zielposition (einfahrt \| ausfahrt), null = Halt |
 | `drehplattform.drehung.jog` | -1\|0\|1 | Drehplattform: Drehung Tippbetrieb |
 | `drehplattform.lock` | bool | Drehplattform: Verriegelung einlegen |
-| `block1.drive` | bool | Block 1 · Wasserkanal: Förderantrieb ein |
-| `block1.brakeOpen` | bool | Block 1 · Wasserkanal: Bremse lüften |
+| `block1.drive` | bool | Block 1 · S-Kurve: Förderantrieb ein |
+| `block1.brakeOpen` | bool | Block 1 · S-Kurve: Bremse lüften |
+| `block2.drive` | bool | Block 2 · Beckenrand: Förderantrieb ein |
+| `block2.brakeOpen` | bool | Block 2 · Beckenrand: Bremse lüften |
+| `block3.drive` | bool | Block 3 · Kreisbogen: Förderantrieb ein |
+| `block3.brakeOpen` | bool | Block 3 · Kreisbogen: Bremse lüften |
 | `catchcar.drive` | bool | Catch-Car-Lift: Förderantrieb ein |
 | `catchcar.brakeOpen` | bool | Catch-Car-Lift: Bremse lüften |
 | `catchcar.wagen.cmd` | string\|null | Catch-Car-Lift: Catch Car Zielposition (unten \| oben), null = Halt |
 | `catchcar.wagen.jog` | -1\|0\|1 | Catch-Car-Lift: Catch Car Tippbetrieb |
-| `block2.drive` | bool | Block 2 · Abfahrt: Förderantrieb ein |
-| `block2.brakeOpen` | bool | Block 2 · Abfahrt: Bremse lüften |
 | `drehlift.drive` | bool | Drehlift: Förderantrieb ein |
 | `drehlift.brakeOpen` | bool | Drehlift: Bremse lüften |
 | `drehlift.hub.cmd` | string\|null | Drehlift: Hub Zielposition (unten \| oben), null = Halt |
@@ -132,5 +135,5 @@ Erzeugt mit `npm run io-list`. Nach Änderungen am Layout neu erzeugen.
 | `drehlift.drehung.cmd` | string\|null | Drehlift: Drehung Zielposition (einfahrt \| ausfahrt), null = Halt |
 | `drehlift.drehung.jog` | -1\|0\|1 | Drehlift: Drehung Tippbetrieb |
 | `drehlift.lock` | bool | Drehlift: Verriegelung einlegen |
-| `block3.drive` | bool | Block 3 · Bremsstrecke: Förderantrieb ein |
-| `block3.brakeOpen` | bool | Block 3 · Bremsstrecke: Bremse lüften |
+| `block4.drive` | bool | Block 4 · Bremsstrecke: Förderantrieb ein |
+| `block4.brakeOpen` | bool | Block 4 · Bremsstrecke: Bremse lüften |

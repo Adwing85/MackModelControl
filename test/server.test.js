@@ -29,7 +29,7 @@ describe('HTTP-Schnittstelle', () => {
     assert.equal(html.status, 200);
     assert.match(await html.text(), /<title>/);
     const cfg = await (await fetch(`${base}/api/config`)).json();
-    assert.equal(cfg.config.sections.length, 7);
+    assert.equal(cfg.config.sections.length, config.sections.length);
     assert.equal(cfg.driver, 'simulation');
     assert.ok(cfg.io.inputs.some((s) => s.key === 'drehplattform.lock.engaged'));
     const state = await (await fetch(`${base}/api/state`)).json();

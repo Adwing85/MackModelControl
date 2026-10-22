@@ -55,9 +55,23 @@
     {
       "id": "block1",
       "type": "block",
-      "name": "Block 1 · Wasserkanal",
+      "name": "Block 1 · S-Kurve",
       "short": "B1",
-      "travelTime": 6
+      "travelTime": 13
+    },
+    {
+      "id": "block2",
+      "type": "block",
+      "name": "Block 2 · Beckenrand",
+      "short": "B2",
+      "travelTime": 11
+    },
+    {
+      "id": "block3",
+      "type": "block",
+      "name": "Block 3 · Kreisbogen",
+      "short": "B3",
+      "travelTime": 12
     },
     {
       "id": "catchcar",
@@ -79,13 +93,6 @@
       },
       "entry": { "wagen": "unten" },
       "exit": { "wagen": "oben" }
-    },
-    {
-      "id": "block2",
-      "type": "block",
-      "name": "Block 2 · Abfahrt",
-      "short": "B2",
-      "travelTime": 5
     },
     {
       "id": "drehlift",
@@ -120,14 +127,14 @@
       "exit": { "hub": "oben", "drehung": "ausfahrt" }
     },
     {
-      "id": "block3",
+      "id": "block4",
       "type": "block",
-      "name": "Block 3 · Bremsstrecke",
-      "short": "B3",
+      "name": "Block 4 · Bremsstrecke",
+      "short": "B4",
       "travelTime": 5
     }
   ],
   "simulation": {
-    "initialBoats": ["station", "block3", "block2"]
+    "initialBoats": ["station", "block4", "block3"]
   }
 }
