@@ -1,0 +1,143 @@
+{
+  "name": "Rocking Boat",
+  "subtitle": "Modellsteuerung",
+  "boats": 3,
+  "display": {
+    "stationHeading": 180
+  },
+  "io": {
+    "driver": "simulation",
+    "host": "127.0.0.1",
+    "port": 7000
+  },
+  "timing": {
+    "tickMs": 50,
+    "broadcastMs": 100,
+    "sensorDebounce": 0.6,
+    "settleTime": 0.3,
+    "transferTimeoutFactor": 2,
+    "transferTimeoutMargin": 3,
+    "lockTimeout": 2.5,
+    "stationFeedbackTimeout": 4,
+    "jogWatchdogMs": 400
+  },
+  "station": {
+    "dwellTime": 10,
+    "autoDispatch": true
+  },
+  "sections": [
+    {
+      "id": "station",
+      "type": "station",
+      "name": "Bahnhof",
+      "short": "BHF",
+      "travelTime": 4
+    },
+    {
+      "id": "drehplattform",
+      "type": "turntable",
+      "name": "Drehplattform",
+      "short": "DP",
+      "travelTime": 3,
+      "lock": true,
+      "axes": {
+        "drehung": {
+          "label": "Drehung",
+          "unit": "°",
+          "display": "rotary",
+          "speed": 40,
+          "min": -10,
+          "max": 190,
+          "tolerance": 0.5,
+          "positions": { "einfahrt": 0, "ausfahrt": 180 }
+        }
+      },
+      "entry": { "drehung": "einfahrt" },
+      "exit": { "drehung": "ausfahrt" }
+    },
+    {
+      "id": "block1",
+      "type": "block",
+      "name": "Block 1 · S-Kurve",
+      "short": "B1",
+      "travelTime": 13
+    },
+    {
+      "id": "block2",
+      "type": "block",
+      "name": "Block 2 · Beckenrand",
+      "short": "B2",
+      "travelTime": 11
+    },
+    {
+      "id": "block3",
+      "type": "block",
+      "name": "Block 3 · Kreisbogen",
+      "short": "B3",
+      "travelTime": 12
+    },
+    {
+      "id": "catchcar",
+      "type": "catchCarLift",
+      "name": "Catch-Car-Lift",
+      "short": "CCL",
+      "travelTime": 3,
+      "axes": {
+        "wagen": {
+          "label": "Catch Car",
+          "unit": "%",
+          "display": "incline",
+          "speed": 14,
+          "min": 0,
+          "max": 100,
+          "tolerance": 0.5,
+          "positions": { "unten": 0, "oben": 100 }
+        }
+      },
+      "entry": { "wagen": "unten" },
+      "exit": { "wagen": "oben" }
+    },
+    {
+      "id": "drehlift",
+      "type": "rotatingLift",
+      "name": "Drehlift",
+      "short": "DL",
+      "travelTime": 3,
+      "lock": true,
+      "axes": {
+        "hub": {
+          "label": "Hub",
+          "unit": "mm",
+          "display": "vertical",
+          "speed": 60,
+          "min": 0,
+          "max": 300,
+          "tolerance": 1,
+          "positions": { "unten": 0, "oben": 300 }
+        },
+        "drehung": {
+          "label": "Drehung",
+          "unit": "°",
+          "display": "rotary",
+          "speed": 45,
+          "min": -10,
+          "max": 190,
+          "tolerance": 0.5,
+          "positions": { "einfahrt": 0, "ausfahrt": 180 }
+        }
+      },
+      "entry": { "hub": "oben", "drehung": "einfahrt" },
+      "exit": { "hub": "unten", "drehung": "ausfahrt" }
+    },
+    {
+      "id": "block4",
+      "type": "block",
+      "name": "Block 4 · Bremsstrecke",
+      "short": "B4",
+      "travelTime": 5
+    }
+  ],
+  "simulation": {
+    "initialBoats": ["station", "block4", "block3"]
+  }
+}

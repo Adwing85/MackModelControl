@@ -1,0 +1,16 @@
+{
+  "name": "mack-model-control",
+  "version": "1.0.0",
+  "description": "Steuerungsoberfläche für das Rocking-Boat-Messemodell mit Drehplattform, Drehlift, Catch-Car-Lift und Blockstrecke",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "emulator": "node tools/hardware-emulator.js",
+    "io-list": "node tools/io-list.js",
+    "test": "node --test test/*.test.js"
+  }
+}

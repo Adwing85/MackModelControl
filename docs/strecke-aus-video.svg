@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" font-family="system-ui, Segoe UI, Roboto, Arial, sans-serif">
+  <title>Rekonstruktion der Teststrecke aus dem Video IMG_0518 (schematisch)</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#f2b630"/>
+    </marker>
+    <pattern id="grate" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#cbbba3"/>
+      <rect x="1.5" y="1.5" width="7" height="7" fill="#9c8a72"/>
+    </pattern>
+  </defs>
+
+  <rect width="1000" height="640" fill="#0d141c"/>
+  <text x="40" y="40" fill="#e8eef5" font-size="22" font-weight="800">Teststrecke aus dem Video (Draufsicht, schematisch)</text>
+  <text x="40" y="64" fill="#8ea0b3" font-size="14">Werkstatt-Testbecken · 1 Boot · 25 s Fahrt · Maße und Winkel nicht maßstäblich</text>
+
+  <!-- Becken -->
+  <rect x="40" y="90" width="760" height="500" rx="26" fill="#1c3f63" stroke="#2f5c88" stroke-width="6"/>
+  <text x="420" y="112" fill="#8fb3d6" font-size="12" text-anchor="middle" letter-spacing="2">RÜCKWAND (REGALE, ZULAUFSCHLAUCH)</text>
+
+  <!-- Großer Kreisbogen auf Stützen: hinten hoch, vorne auf Wasserhöhe -->
+  <circle cx="560" cy="330" r="185" fill="none" stroke="#5bb4ff" stroke-width="16" opacity="0.25"/>
+  <path d="M 395 247 A 185 185 0 0 1 725 247" fill="none" stroke="#5bb4ff" stroke-width="7"/>
+  <path d="M 725 247 A 185 185 0 0 1 395 413" fill="none" stroke="#5bb4ff" stroke-width="7"/>
+  <path d="M 395 413 A 185 185 0 0 1 395 247" fill="none" stroke="#5bb4ff" stroke-width="7"/>
+  <g fill="#e9e4da">
+    <circle cx="430" cy="196" r="7"/><circle cx="485" cy="160" r="8"/><circle cx="560" cy="146" r="9"/>
+    <circle cx="635" cy="160" r="8"/><circle cx="690" cy="196" r="7"/><circle cx="735" cy="262" r="6"/>
+    <circle cx="380" cy="300" r="5"/><circle cx="385" cy="380" r="4"/>
+  </g>
+  <!-- Fahrtrichtung auf dem Kreisbogen (angenommen) -->
+  <g fill="none" stroke="#f2b630" stroke-width="2.5" stroke-dasharray="6 6" marker-end="url(#arrow)">
+    <path d="M 440 222 A 150 150 0 0 1 680 222"/>
+    <path d="M 712 300 A 152 152 0 0 1 690 420"/>
+  </g>
+  <text x="560" y="132" fill="#e8eef5" font-size="14" font-weight="700" text-anchor="middle">Kreisbogen auf Stützen</text>
+  <text x="560" y="262" fill="#8ea0b3" font-size="12" text-anchor="middle">hinten hoch aufgeständert,</text>
+  <text x="560" y="278" fill="#8ea0b3" font-size="12" text-anchor="middle">vorne auf Wasserhöhe</text>
+
+  <!-- Drehplattform -->
+  <circle cx="620" cy="400" r="62" fill="url(#grate)" stroke="#e1d3bd" stroke-width="3"/>
+  <rect x="604" y="338" width="32" height="124" rx="4" fill="none" stroke="#c9ced6" stroke-width="5"/>
+  <text x="600" y="548" fill="#e8eef5" font-size="14" font-weight="700">Drehplattform</text>
+  <text x="600" y="565" fill="#8ea0b3" font-size="12">Gitterscheibe mit Gleisstück,</text>
+  <text x="600" y="580" fill="#8ea0b3" font-size="12">im Video nicht in Bewegung</text>
+
+  <!-- Unterwasserschiene: S-Kurve und Bogen an der Beckenwand -->
+  <path id="lowtrack" d="M 470 500 C 420 545, 370 560, 330 530 S 250 440, 210 480 S 150 560, 110 520 C 75 480, 72 380, 80 300 C 88 220, 120 150, 200 140 C 260 134, 305 148, 330 168"
+        fill="none" stroke="#5bb4ff" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 470 500 C 420 545, 370 560, 330 530 S 250 440, 210 480 S 150 560, 110 520 C 75 480, 72 380, 80 300 C 88 220, 120 150, 200 140 C 260 134, 305 148, 330 168"
+        fill="none" stroke="#f2b630" stroke-width="2.5" stroke-dasharray="2 9" marker-end="url(#arrow)"/>
+
+  <!-- Nicht sichtbare Anschlüsse -->
+  <path d="M 470 500 C 500 470, 520 450, 560 425" fill="none" stroke="#5bb4ff" stroke-width="4" stroke-dasharray="7 7"/>
+  <path d="M 330 168 C 360 185, 380 200, 400 238" fill="none" stroke="#5bb4ff" stroke-width="4" stroke-dasharray="7 7"/>
+  <text x="440" y="455" fill="#8ea0b3" font-size="12">Anschluss?</text>
+  <text x="300" y="215" fill="#8ea0b3" font-size="12">Anschluss?</text>
+
+  <!-- Zeitmarken der Bootsfahrt -->
+  <g font-size="12" font-weight="700" fill="#0d141c">
+    <g transform="translate(470 500)"><circle r="13" fill="#f2b630"/><text text-anchor="middle" dy="4">0 s</text></g>
+    <g transform="translate(300 515)"><circle r="13" fill="#f2b630"/><text text-anchor="middle" dy="4">4</text></g>
+    <g transform="translate(205 482)"><circle r="13" fill="#f2b630"/><text text-anchor="middle" dy="4">9</text></g>
+    <g transform="translate(92 470)"><circle r="13" fill="#f2b630"/><text text-anchor="middle" dy="4">13</text></g>
+    <g transform="translate(82 280)"><circle r="13" fill="#f2b630"/><text text-anchor="middle" dy="4">18</text></g>
+    <g transform="translate(330 168)"><circle r="16" fill="#f2b630"/><text text-anchor="middle" dy="4">24,5</text></g>
+  </g>
+  <text x="250" y="420" fill="#e8eef5" font-size="14" font-weight="700" text-anchor="middle">S-Kurve (Unterwasserschiene)</text>
+  <text x="250" y="438" fill="#8ea0b3" font-size="12" text-anchor="middle">ca. 13 s Fahrzeit</text>
+  <text x="128" y="300" fill="#e8eef5" font-size="14" font-weight="700">Bogen an der Beckenwand</text>
+  <text x="128" y="318" fill="#8ea0b3" font-size="12">ca. 11 s Fahrzeit</text>
+
+  <!-- Legende -->
+  <g transform="translate(814 110)" font-size="13" fill="#e8eef5">
+    <text font-weight="800" font-size="14">Legende</text>
+    <line x1="0" y1="26" x2="34" y2="26" stroke="#5bb4ff" stroke-width="6"/><text x="44" y="30">im Video gesehen</text>
+    <line x1="0" y1="52" x2="34" y2="52" stroke="#5bb4ff" stroke-width="4" stroke-dasharray="7 7"/><text x="44" y="56">angenommen</text>
+    <line x1="0" y1="78" x2="34" y2="78" stroke="#f2b630" stroke-width="2.5" stroke-dasharray="2 9"/><text x="44" y="82">Fahrt des Boots</text>
+    <circle cx="10" cy="104" r="8" fill="#e9e4da"/><text x="44" y="108">Stütze</text>
+    <line x1="0" y1="130" x2="34" y2="130" stroke="#f2b630" stroke-width="2.5" stroke-dasharray="6 6"/><text x="44" y="134">Richtung (Annahme)</text>
+    <text y="170" font-weight="800" font-size="14">Nicht im Video</text>
+    <text y="192" fill="#8ea0b3">Bahnhof</text>
+    <text y="212" fill="#8ea0b3">Catch-Car-Lift</text>
+    <text y="232" fill="#8ea0b3">Drehlift</text>
+    <text y="252" fill="#8ea0b3">Blockgrenzen/Sensoren</text>
+    <text y="272" fill="#8ea0b3">weitere Boote</text>
+  </g>
+</svg>
