@@ -89,6 +89,10 @@ export function normalizeConfig(raw) {
   station.autoDispatch = Boolean(station.autoDispatch);
   if (!(station.dwellTime >= 1)) fail('station.dwellTime muss mindestens 1 s betragen');
 
+  // Ausrichtung der Boote im Bahnhof relativ zur Fahrtrichtung (180 = Heck voraus), nur für die Darstellung
+  const display = { stationHeading: Number(raw.display?.stationHeading ?? 0) };
+  if (!Number.isFinite(display.stationHeading)) fail('display.stationHeading muss eine Zahl (Grad) sein');
+
   const simulation = { ...(raw.simulation ?? {}) };
   if (!errors.length) {
     simulation.initialBoats ??= defaultInitialBoats(sections, boats);
@@ -109,6 +113,7 @@ export function normalizeConfig(raw) {
     io: { driver: 'simulation', ...(raw.io ?? {}) },
     timing,
     station,
+    display,
     sections,
     simulation,
   };

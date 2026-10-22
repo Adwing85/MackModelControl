@@ -28,6 +28,11 @@
     <circle cx="635" cy="160" r="8"/><circle cx="690" cy="196" r="7"/><circle cx="735" cy="262" r="6"/>
     <circle cx="380" cy="300" r="5"/><circle cx="385" cy="380" r="4"/>
   </g>
+  <!-- Fahrtrichtung auf dem Kreisbogen (angenommen) -->
+  <g fill="none" stroke="#f2b630" stroke-width="2.5" stroke-dasharray="6 6" marker-end="url(#arrow)">
+    <path d="M 440 222 A 150 150 0 0 1 680 222"/>
+    <path d="M 712 300 A 152 152 0 0 1 690 420"/>
+  </g>
   <text x="560" y="132" fill="#e8eef5" font-size="14" font-weight="700" text-anchor="middle">Kreisbogen auf Stützen</text>
   <text x="560" y="262" fill="#8ea0b3" font-size="12" text-anchor="middle">hinten hoch aufgeständert,</text>
   <text x="560" y="278" fill="#8ea0b3" font-size="12" text-anchor="middle">vorne auf Wasserhöhe</text>
@@ -66,17 +71,18 @@
   <text x="128" y="318" fill="#8ea0b3" font-size="12">ca. 11 s Fahrzeit</text>
 
   <!-- Legende -->
-  <g transform="translate(822 110)" font-size="13" fill="#e8eef5">
+  <g transform="translate(814 110)" font-size="13" fill="#e8eef5">
     <text font-weight="800" font-size="14">Legende</text>
     <line x1="0" y1="26" x2="34" y2="26" stroke="#5bb4ff" stroke-width="6"/><text x="44" y="30">im Video gesehen</text>
     <line x1="0" y1="52" x2="34" y2="52" stroke="#5bb4ff" stroke-width="4" stroke-dasharray="7 7"/><text x="44" y="56">angenommen</text>
     <line x1="0" y1="78" x2="34" y2="78" stroke="#f2b630" stroke-width="2.5" stroke-dasharray="2 9"/><text x="44" y="82">Fahrt des Boots</text>
     <circle cx="10" cy="104" r="8" fill="#e9e4da"/><text x="44" y="108">Stütze</text>
-    <text y="150" font-weight="800" font-size="14">Nicht im Video</text>
-    <text y="172" fill="#8ea0b3">Bahnhof</text>
-    <text y="192" fill="#8ea0b3">Catch-Car-Lift</text>
-    <text y="212" fill="#8ea0b3">Drehlift</text>
-    <text y="232" fill="#8ea0b3">Blockgrenzen/Sensoren</text>
-    <text y="252" fill="#8ea0b3">weitere Boote</text>
+    <line x1="0" y1="130" x2="34" y2="130" stroke="#f2b630" stroke-width="2.5" stroke-dasharray="6 6"/><text x="44" y="134">Richtung (Annahme)</text>
+    <text y="170" font-weight="800" font-size="14">Nicht im Video</text>
+    <text y="192" fill="#8ea0b3">Bahnhof</text>
+    <text y="212" fill="#8ea0b3">Catch-Car-Lift</text>
+    <text y="232" fill="#8ea0b3">Drehlift</text>
+    <text y="252" fill="#8ea0b3">Blockgrenzen/Sensoren</text>
+    <text y="272" fill="#8ea0b3">weitere Boote</text>
   </g>
 </svg>

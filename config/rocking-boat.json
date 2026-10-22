@@ -2,6 +2,9 @@
   "name": "Rocking Boat",
   "subtitle": "Modellsteuerung",
   "boats": 3,
+  "display": {
+    "stationHeading": 180
+  },
   "io": {
     "driver": "simulation",
     "host": "127.0.0.1",
@@ -123,8 +126,8 @@
           "positions": { "einfahrt": 0, "ausfahrt": 180 }
         }
       },
-      "entry": { "hub": "unten", "drehung": "einfahrt" },
-      "exit": { "hub": "oben", "drehung": "ausfahrt" }
+      "entry": { "hub": "oben", "drehung": "einfahrt" },
+      "exit": { "hub": "unten", "drehung": "ausfahrt" }
     },
     {
       "id": "block4",

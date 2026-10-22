@@ -92,7 +92,7 @@ export class Synoptic {
       pos += len;
     }
     // Ausrichtung der Boote: Drehelemente drehen das Boot mit (z. B. Rückwärtsfahrt nach 180°).
-    let heading = 0;
+    let heading = Number(this.config.display?.stationHeading) || 0;
     const headingBefore = {};
     for (const i of order) {
       const c = cfgs[i];

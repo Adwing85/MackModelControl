@@ -133,12 +133,14 @@ aufgezählt, nach dem letzten folgt wieder der erste.
 | `sections[].entry` / `exit` | Achsstellung für Ein- bzw. Ausfahrt, z. B. `{ "hub": "unten", "drehung": "einfahrt" }` |
 | `station.dwellTime`, `station.autoDispatch` | Verweilzeit und Auto-Abfertigung beim Start |
 | `timing.*` | Überwachungszeiten (Sensorentprellung, Zeitreserven, Totmann-Zeit) |
+| `display.stationHeading` | Ausrichtung der Boote im Bahnhof für die Streckenübersicht (0 = Bug voraus, 180 = Heck voraus) |
 | `simulation.initialBoats` | Startpositionen der Boote in der Simulation |
 
 > **Stand des Standardlayouts:** S-Kurve, Bogen an der Beckenwand, Kreisbogen und Drehplattform stammen aus dem
 > Testvideo, siehe [Streckenrekonstruktion](docs/strecke-aus-video.md). Bahnhof, Catch-Car-Lift, Drehlift, Drehwinkel
-> und Hubwege sind noch Annahmen (Bahnhof → Drehplattform 180° → S-Kurve → Beckenrand → Kreisbogen → Catch-Car-Lift →
-> Drehlift 300 mm/180° → Bremsstrecke). Die Oberfläche baut sich vollständig aus der Konfiguration auf.
+> und Hubwege sind begründete Annahmen: Bahnhof → Drehplattform 180° → S-Kurve → Beckenrand → Kreisbogen
+> (Auftauchstrecke) → Catch-Car-Lift → Drehlift (180°, senkt 300 mm ab) → Bremsstrecke. Die Oberfläche baut sich
+> vollständig aus der Konfiguration auf.
 
 ## Anbindung der Modell-Hardware
 
